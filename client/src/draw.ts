@@ -1,3 +1,5 @@
+import * as map from "./map"
+
 var canvas : HTMLCanvasElement | null = document.getElementById('mainCanvas') as HTMLCanvasElement
 if (!canvas){
     console.error("failed to create canvas");
@@ -18,6 +20,14 @@ export function drawLine(ctx: CanvasRenderingContext2D, x1: number, y1: number, 
     ctx.stroke(); // Рисование линии
 }
 
+function getColorByDistance(v:number): string{
+    let c = 50
+    const r = Math.floor(v * c)
+    const g = Math.floor(v * c)
+    const b = Math.floor(v * c)
+    return `rgb(${r}, ${g}, ${b})`;
+}
+
 export function getRandomColor(): string {
     const r = Math.floor(Math.random() * 256); // Случайное значение для красного компонента (от 0 до 255)
     const g = Math.floor(Math.random() * 256); // Случайное значение для зеленого компонента (от 0 до 255)
@@ -26,7 +36,8 @@ export function getRandomColor(): string {
 }
 
 export function draw(){
+    let distances = map.distantToWall(canvas.width-1)
     for (var x = 0; x < canvas.width-1; x++){
-        drawLine(canvasContext, x, 0, x+1, canvas.height, getRandomColor())
+        drawLine(canvasContext, x, 0, x+1, canvas.height, getColorByDistance(distances[x]))
     }
 }
