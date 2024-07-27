@@ -1,0 +1,1 @@
+export const degreesToRad = (deg: number) => (deg * (Math.PI/180))

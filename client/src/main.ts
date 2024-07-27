@@ -1,9 +1,11 @@
-import * as drawModule from "./draw"
+import { draw } from "./draw.js"
+import * as input from "./input.js"
 //window.addEventListener('resize', resizeCanvas)
 
-// setInterval(drawModule.draw, 2)
+// setInterval(drawModule.draw, 2)\
+input.init()
 function animate(){
-    drawModule.draw()
+    draw()
     requestAnimationFrame(animate)
 }
 animate()

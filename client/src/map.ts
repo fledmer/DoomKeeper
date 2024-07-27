@@ -1,3 +1,5 @@
+import { degreesToRad } from "./utils.js"
+
 class MapObject{
     data: string
     constructor(data: string) {
@@ -8,6 +10,42 @@ class MapObject{
     }
 }
 
+export class Map{
+    mapValue = [
+        [1,1,1,1,1,1],
+        [1,0,0,0,0,1],
+        [1,0,0,0,0,1],
+        [1,0,0,0,0,1],
+        [1,0,0,0,0,1],
+        [1,1,1,1,1,1],
+    ] 
+    fov = 90
+    angle = 0.0
+    y = 3
+    x = 1
+    step = 0.01
+
+    distantToWall(rayCount:number ): number[]{
+        let angleStep = this.fov/rayCount
+        let lAngle = this.angle - this.fov/2
+        let lengths: number[] = []
+        for(let ray = 0; ray < rayCount; ray++){
+            let lx = this.x, ly = this.y, totalDist = 0
+            let lMapObject = 0
+            do{
+                ly += this.step * Math.sin(degreesToRad(lAngle))
+                lx += this.step * Math.cos(degreesToRad(lAngle))
+                lMapObject = this.mapValue[Math.trunc(ly)][Math.trunc(lx)]
+                totalDist += this.step
+            } while(lMapObject !== undefined && lMapObject != 1)  
+            lengths.push(totalDist * fishEyeCoef(lAngle, this.angle, this.fov))
+            lAngle+=angleStep
+        }
+        return lengths   
+    } 
+}
+
+export let actualMap = new Map()
 const Empt: MapObject = new MapObject("")
 const Wall: MapObject = new MapObject("Wall")
 
@@ -19,40 +57,8 @@ const Wall: MapObject = new MapObject("Wall")
 //     [Wall,Wall,Wall,Wall,Wall],
 // ] 
 
-let map: number[][] = [
-        [1,1,1,1,1],
-        [1,0,0,0,1],
-        [1,0,0,1,1],
-        [1,0,0,0,1],
-        [1,1,1,1,1],
-    ] 
+let fishEyeCoef = (curAngle: number, baseAngle: number, fov: number) => (
+    Math.sin(degreesToRad(Math.abs(90-Math.abs(baseAngle-curAngle))))
+    // 1
+)
 
-const fov = 80
-let angle = 0.0
-let y = 2
-let x = 1
-
-export function distantToWall(rayCount:number ): number[]{
-    let angleStep = fov/rayCount
-    let step = 0.5
-    let lAngle = angle - fov/2
-    let lengths: number[] = []
-    for(let x = 0; x < rayCount; x++){
-        try{
-            let lx = x, ly = y, totalDist = 0
-            let lMapObject = map[ly][lx]    
-            while (lMapObject != 1){
-                ly += step * Math.sin(lAngle)
-                lx += step * Math.cos(lAngle)
-                lMapObject = map[ly][lx]  
-                totalDist += step
-            }
-            lengths.push(totalDist)
-        }
-        catch (e) {
-            console.error("failed to calculate distance: " + e)
-            lengths.push(100)
-        }
-    }
-    return lengths   
-} 
