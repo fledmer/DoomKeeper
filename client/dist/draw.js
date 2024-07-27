@@ -10,7 +10,6 @@ export function resizeCanvas() {
     draw();
 }
 export function drawLine(ctx, x1, y1, x2, y2, color) {
-    ctx.setLineDash([1, 1, 1, 1]);
     ctx.beginPath(); // Начало нового пути
     ctx.moveTo(x1, y1); // Перемещение пера к начальной точке (x1, y1)
     ctx.lineTo(x2, y2); // Проведение линии к конечной точке (x2, y2)
