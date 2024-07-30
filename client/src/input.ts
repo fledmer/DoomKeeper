@@ -18,6 +18,26 @@ export function init(){
                 actualMap.x += speed * Math.cos(degreesToRad(actualMap.angle))
                 actualMap.y += speed * Math.sin(degreesToRad(actualMap.angle))
                 break
+            case 'ArrowDown':
+                actualMap.x -= speed * Math.cos(degreesToRad(actualMap.angle))
+                actualMap.y -= speed * Math.sin(degreesToRad(actualMap.angle))
+                break
+            case 'KeyW':
+                actualMap.x += speed * Math.cos(degreesToRad(actualMap.angle))
+                actualMap.y += speed * Math.sin(degreesToRad(actualMap.angle))
+                break
+            case 'KeyS':
+                actualMap.x -= speed * Math.cos(degreesToRad(actualMap.angle))
+                actualMap.y -= speed * Math.sin(degreesToRad(actualMap.angle))
+                break
+            case 'KeyD':
+                actualMap.x += speed * Math.cos(degreesToRad(actualMap.angle+90))
+                actualMap.y += speed * Math.sin(degreesToRad(actualMap.angle+90))
+                break
+            case 'KeyA':
+                actualMap.x += speed * Math.cos(degreesToRad(actualMap.angle-90))
+                actualMap.y += speed * Math.sin(degreesToRad(actualMap.angle-90))
+                break
         }
     })
 }

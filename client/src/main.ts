@@ -1,12 +1,15 @@
-import { draw } from "./draw.js"
+import * as draw from "./draw.js"
 import * as input from "./input.js"
-//window.addEventListener('resize', resizeCanvas)
+import * as server from "./server.js" 
 
-// setInterval(drawModule.draw, 2)\
-input.init()
 function animate(){
-    draw()
+    draw.draw()
     requestAnimationFrame(animate)
-}
-animate()
+}   
+window.addEventListener('DOMContentLoaded', () => {
+    server.init()
+    input.init()
+    draw.init()
+    animate()
+})
 // requestAnimationFrame(animate)
