@@ -11,8 +11,12 @@
   "type": "module",
   "license": "ISC",
   "devDependencies": {
+    "@types/pubsub-js": "^1.8.6",
     "ts-loader": "^9.5.1",
     "typescript": "^5.5.4"
   },
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "pubsub-js": "^1.9.4"
+  }
 }
