@@ -12,11 +12,13 @@
   "license": "ISC",
   "devDependencies": {
     "@types/pubsub-js": "^1.8.6",
+    "@types/uuid": "^10.0.0",
     "ts-loader": "^9.5.1",
     "typescript": "^5.5.4"
   },
   "description": "",
   "dependencies": {
-    "pubsub-js": "^1.9.4"
+    "pubsub-js": "^1.9.4",
+    "uuid": "^10.0.0"
   }
 }

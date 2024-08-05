@@ -8,7 +8,7 @@ class MapObject {
         return this.data == "";
     }
 }
-export class Map {
+export class World {
     mapValue = [
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
@@ -28,7 +28,12 @@ export class Map {
     y = 1;
     x = 1;
     step = 0.01;
+    users = new Map();
     distantToWall(rayCount) {
+        var mv = [...this.mapValue];
+        this.users.forEach(user => {
+            mv[Math.trunc(user.PossY)][Math.trunc(user.PossX)] = 1;
+        });
         let angleStep = this.fov / rayCount;
         let lAngle = this.angle - this.fov / 2;
         let lengths = [];
@@ -38,16 +43,19 @@ export class Map {
             do {
                 ly += this.step * Math.sin(degreesToRad(lAngle));
                 lx += this.step * Math.cos(degreesToRad(lAngle));
-                lMapObject = this.mapValue[Math.trunc(ly)][Math.trunc(lx)];
+                lMapObject = mv[Math.trunc(ly)][Math.trunc(lx)];
                 totalDist += this.step;
             } while (lMapObject !== undefined && lMapObject != 1);
             lengths.push(totalDist * fishEyeCoef(lAngle, this.angle, this.fov));
             lAngle += angleStep;
         }
+        this.users.forEach(user => {
+            mv[Math.trunc(user.PossY)][Math.trunc(user.PossX)] = 0;
+        });
         return lengths;
     }
 }
-export let actualMap = new Map();
+export let actualWorld = new World();
 const Empt = new MapObject("");
 const Wall = new MapObject("Wall");
 // let map: MapObject[][] = [

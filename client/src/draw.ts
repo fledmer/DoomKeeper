@@ -1,4 +1,4 @@
-import {actualMap} from "./map.js"
+import {actualWorld} from "./map.js"
 import { degreesToRad } from "./utils.js";
 
 var canvas : HTMLCanvasElement | null = document.getElementById('mainCanvas') as HTMLCanvasElement
@@ -56,7 +56,7 @@ export function draw(){
     canvasContext.clearRect(0,0, canvas.width, canvas.height)
     canvasContext.drawImage(background,0,0, canvas.width, canvas.height)
     // canvasContext.drawImage(land,0, canvas.height/2, canvas.width, canvas.height/2)
-    let distances = actualMap.distantToWall(canvas.width-1)
+    let distances = actualWorld.distantToWall(canvas.width-1)
     for (var x = 0; x < canvas.width-1; x++){
         let h = Math.min(canvas.height,canvas.height/((distances[x])))
         let sh = (canvas.height - h) / 2

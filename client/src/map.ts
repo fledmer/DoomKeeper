@@ -1,4 +1,5 @@
 import { degreesToRad } from "./utils.js"
+import * as entity from "./model/entity.js"
 
 class MapObject{
     data: string
@@ -10,7 +11,7 @@ class MapObject{
     }
 }
 
-export class Map{
+export class World{
     mapValue = [
         [1,1,1,1,1,1,1,1,1,1,1],
         [1,0,0,0,0,0,0,0,0,0,1],
@@ -30,7 +31,12 @@ export class Map{
     y = 1
     x = 1
     step = 0.01
+    users = new Map<string, entity.User>();
     distantToWall(rayCount:number ): number[]{
+        var mv = [...this.mapValue]
+        this.users.forEach(user => {
+            mv[Math.trunc(user.PossY)][Math.trunc(user.PossX)] = 1
+        });
         let angleStep = this.fov/rayCount
         let lAngle = this.angle - this.fov/2
         let lengths: number[] = []
@@ -40,17 +46,20 @@ export class Map{
             do{
                 ly += this.step * Math.sin(degreesToRad(lAngle))
                 lx += this.step * Math.cos(degreesToRad(lAngle))
-                lMapObject = this.mapValue[Math.trunc(ly)][Math.trunc(lx)]
+                lMapObject = mv[Math.trunc(ly)][Math.trunc(lx)]
                 totalDist += this.step
             } while(lMapObject !== undefined && lMapObject != 1)  
             lengths.push(totalDist * fishEyeCoef(lAngle, this.angle, this.fov))
             lAngle+=angleStep
         }
+        this.users.forEach(user => {
+            mv[Math.trunc(user.PossY)][Math.trunc(user.PossX)] = 0
+        });
         return lengths   
     } 
 }
 
-export let actualMap = new Map()
+export let actualWorld = new World()
 const Empt: MapObject = new MapObject("")
 const Wall: MapObject = new MapObject("Wall")
 
