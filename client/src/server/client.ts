@@ -1,15 +1,22 @@
+import { UserController } from './../controller/user_controller.js';
 import * as events from "../model/external_events.js"
-import * as game from "../map.js"
+import * as game from "../controller/map_controller.js"
 import * as entity from "../model/entity.js"
 
 export var currentServer: ClientServer
 
+enum ConnectionState{
+    Disconnected = 1,
+    Connected
+}
+
 export class ClientServer{
     serverURL: string
     socket: WebSocket
+    state: ConnectionState
     user: entity.User
 
-    constructor(serverURL: string){
+    constructor(serverURL: string, userController: UserController){
         this.serverURL = serverURL
         currentServer = this
     }
@@ -27,13 +34,16 @@ export class ClientServer{
             console.info("server close the connection", ev)
         }
         this.socket.onopen = () =>{
-            this.user = new entity.User(game.actualWorld.x, game.actualWorld.y)
+            this.state = ConnectionState.Connected
             var pcE = new events.PlayerConnect(this.user)
             this.socket.send(JSON.stringify(new events.ExternalEvent("player_connect",pcE)))
         }
     }
 
     Move(x: number, y: number){
+        if (!(this.state == ConnectionState.Connected)){
+            return
+        }
         var pm = new events.PlayerMove(this.user.PlayerID, x, y)
         var ee = new events.ExternalEvent("player_move", pm)
         this.socket.send(JSON.stringify(ee))
