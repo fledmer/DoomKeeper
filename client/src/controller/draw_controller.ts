@@ -1,5 +1,5 @@
-import {actualWorld} from "./map_controller.js"
-import { degreesToRad } from "../utils.js";
+import {actualWorld} from "./map_controller"
+import { degreesToRad } from "../utils";
 
 export class DrawContoller{
     canvas: HTMLCanvasElement

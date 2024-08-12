@@ -1,5 +1,5 @@
-import { degreesToRad } from "../utils.js"
-import * as entity from "../model/entity.js"
+import { degreesToRad } from "../utils"
+import * as entity from "../model/entity"
 
 class MapObject{
     data: string

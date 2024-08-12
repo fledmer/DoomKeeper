@@ -1,4 +1,4 @@
-import * as entity from "./entity.js"
+import * as entity from "./entity"
 
 export class ExternalEvent{
     Name: string

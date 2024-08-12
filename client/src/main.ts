@@ -1,8 +1,8 @@
-import { UserController } from './controller/user_controller.js';
-import {DrawContoller} from "./controller/draw_controller.js"
-import * as input from "./controller/input_controller.js"
-import * as server from "./server/client.js" 
-import { User } from './model/entity.js';
+import { UserController } from './controller/user_controller';
+import {DrawContoller} from "./controller/draw_controller"
+import * as input from "./controller/input_controller"
+import * as server from "./server/client" 
+import { User } from './model/entity';
 //let socketUrl = "ws://"+window.location.hostname+":8080"+"/api/data_stream"  
 let socketUrl = "ws://"+"localhost"+":8080"+"/api/data_stream" 
 

@@ -10,6 +10,7 @@ import (
 var addr = flag.String("addr", "localhost:8080", "http service address")
 
 func main() {
+
 	server := datastream.NewServer()
 	flag.Parse()
 	log.SetFlags(0)

@@ -1,7 +1,7 @@
-import { UserController } from './../controller/user_controller.js';
-import * as events from "../model/external_events.js"
-import * as game from "../controller/map_controller.js"
-import * as entity from "../model/entity.js"
+import { UserController } from './../controller/user_controller';
+import * as events from "../model/external_events"
+import * as game from "../controller/map_controller"
+import * as entity from "../model/entity"
 
 export var currentServer: ClientServer
 
